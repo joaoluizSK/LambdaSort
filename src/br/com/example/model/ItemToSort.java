@@ -6,9 +6,9 @@ public class ItemToSort {
 
 	private int id;
 	private LocalDate data;
-	private String tipo;
+	private ItemToSortTipo tipo;
 
-	public ItemToSort(int id, LocalDate data, String tipo) {
+	ItemToSort(int id, LocalDate data, ItemToSortTipo tipo) {
 		this.id = id;
 		this.data = data;
 		this.tipo = tipo;
@@ -30,11 +30,11 @@ public class ItemToSort {
 		this.data = data;
 	}
 
-	public String getTipo() {
+	public ItemToSortTipo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(ItemToSortTipo tipo) {
 		this.tipo = tipo;
 	}
 	

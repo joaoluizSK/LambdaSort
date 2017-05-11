@@ -1,18 +1,14 @@
-package br.com.example.builder;
+package br.com.example.model;
 
 import java.time.LocalDate;
-
-import br.com.example.model.ItemToSort;
 
 public class ItemToSortBuilder {
 
 	private int id = -1;
 	private LocalDate data = LocalDate.now();
-	private String tipo = "1";
+	private ItemToSortTipo tipo = ItemToSortTipo.UM;
 
-	public ItemToSortBuilder() {
-
-	}
+	public ItemToSortBuilder() {}
 
 	public ItemToSortBuilder comId(int id) {
 		this.id = id;
@@ -24,7 +20,7 @@ public class ItemToSortBuilder {
 		return this;
 	}
 
-	public ItemToSortBuilder comTipo(String tipo) {
+	public ItemToSortBuilder comTipo(ItemToSortTipo tipo) {
 		this.tipo = tipo;
 		return this;
 	}

@@ -1,35 +1,38 @@
 package br.com.example;
 
-import static org.junit.Assert.assertEquals;
+import br.com.example.model.ItemToSort;
+import br.com.example.model.ItemToSortBuilder;
+import br.com.example.model.ItemToSortTipo;
+import br.com.example.sort.SortFunctions;
+import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
-import org.junit.Test;
-
-import br.com.example.builder.ItemToSortBuilder;
-import br.com.example.model.ItemToSort;
-import br.com.example.sort.SortFunctions;
+import static org.junit.Assert.assertEquals;
 
 public class LambdaSortTest {
 
-	@Test
-	public void test() {
-		List<ItemToSort> valores = new ArrayList<>();
+    @Test
+    public void testOrderning() {
+        ItemToSort item = new ItemToSortBuilder().comId(3).comTipo(ItemToSortTipo.TRES).comData(LocalDate.now().plusDays(2)).build();
+        assertEquals(item.getId(), SortFunctions.getMaxItemDate(Arrays.asList(
+                item,
+                new ItemToSortBuilder().build(),
+                new ItemToSortBuilder().comId(2).comTipo(ItemToSortTipo.DOIS).comData(LocalDate.now().minusDays(2)).build(),
+                new ItemToSortBuilder().comId(4).comTipo(ItemToSortTipo.DOIS).comData(LocalDate.now().minusDays(12)).build()
+        )).getId());
+    }
 
-		ItemToSort item1 = new ItemToSortBuilder().build();
-		ItemToSort item2 = new ItemToSortBuilder().comId(2).comTipo("2").comData(LocalDate.now().minusDays(2)).build();
-		ItemToSort item3 = new ItemToSortBuilder().comId(3).comTipo("3").comData(LocalDate.now().plusDays(2)).build();
-		ItemToSort item4 = new ItemToSortBuilder().comId(4).comTipo("2").comData(LocalDate.now().minusDays(12)).build();
+    @Test(expected = IllegalArgumentException.class)
+    public void testEmptyList() {
+        SortFunctions.getMaxItemDate(new ArrayList<>());
+    }
 
-		valores.add(item1);
-		valores.add(item2);
-		valores.add(item3);
-		valores.add(item4);
-
-		assertEquals(item3.getId(), new SortFunctions().getMaxItemDate(valores).getId());
-
-	}
+    @Test(expected = NullPointerException.class)
+    public void testNullList() {
+        SortFunctions.getMaxItemDate(null);
+    }
 
 }

@@ -1,12 +1,28 @@
 package br.com.example.sort;
 
-import java.util.List;
-
 import br.com.example.model.ItemToSort;
 
-public class SortFunctions {
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
-	public ItemToSort getMaxItemDate(List<ItemToSort> valores) {
-		return valores.stream().max((item1, item2) -> item1.getData().compareTo(item2.getData())).get();
-	}
+public final class SortFunctions {
+
+    public static ItemToSort getMaxItemDate(final List<ItemToSort> valores) {
+        Objects.isNull(valores);
+        final Optional<ItemToSort> optional = getMax(valores);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        throw new IllegalArgumentException("Return list is empty");
+    }
+
+    private static Optional<ItemToSort> getMax(List<ItemToSort> valores) {
+        return valores.stream().max(Comparator.comparing((ItemToSort::getData)));
+    }
+
+    private SortFunctions() {
+    }
+
 }
